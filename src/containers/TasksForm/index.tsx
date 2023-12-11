@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { addTask } from '../../store/reducers/taskList'
 
 import * as enums from '../../utils/enums/Task'
 
@@ -8,6 +12,9 @@ import StyledTasksForm from './style'
 function TasksForm() {
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [prioridade, setPrioridade] = useState(enums.PRIORITY.NORMAL)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   return (
     <StyledTasksForm>
@@ -33,7 +40,9 @@ function TasksForm() {
                 name="priority"
                 value={enums.PRIORITY.NORMAL}
                 defaultChecked
-                onChange={(evt) => console.log(evt.target.value)}
+                onChange={(evt) =>
+                  setPrioridade(evt.target.value as enums.PRIORITY)
+                }
               />
               <span>Normal</span>
             </label>
@@ -42,7 +51,9 @@ function TasksForm() {
                 type="radio"
                 name="priority"
                 value={enums.PRIORITY.IMPORTANTE}
-                onChange={(evt) => console.log(evt.target.value)}
+                onChange={(evt) =>
+                  setPrioridade(evt.target.value as enums.PRIORITY)
+                }
               />
               <span>Importante</span>
             </label>
@@ -51,14 +62,45 @@ function TasksForm() {
                 type="radio"
                 name="priority"
                 value={enums.PRIORITY.URGENTE}
-                onChange={(evt) => console.log(evt.target.value)}
+                onChange={(evt) =>
+                  setPrioridade(evt.target.value as enums.PRIORITY)
+                }
               />
               <span>Urgente</span>
             </label>
           </div>
         </div>
         <div>
-          <StyledBtnSalvar>Cadastrar</StyledBtnSalvar>
+          <StyledBtnSalvar
+            onClick={() => {
+              if (titulo.length < 5) {
+                console.log('Insira um Título maior')
+                alert('Insira um Título maior')
+                return
+              }
+              if (descricao.length < 10) {
+                console.log('Insira uma Descrição maior')
+                alert('Insira uma Descrição maior')
+                return
+              }
+
+              dispatch(
+                addTask({
+                  id: '',
+                  title: titulo,
+                  description: descricao,
+                  priority: prioridade,
+                  status: enums.STATUS.PENDENTE
+                })
+              )
+              setTitulo('')
+              setDescricao('')
+              setPrioridade(enums.PRIORITY.NORMAL)
+              navigate('/')
+            }}
+          >
+            Cadastrar
+          </StyledBtnSalvar>
         </div>
       </div>
     </StyledTasksForm>

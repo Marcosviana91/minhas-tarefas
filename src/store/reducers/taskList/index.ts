@@ -48,10 +48,14 @@ const taskListSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action: PayloadAction<TaskProps>) => {
+      action.payload.id = 'task_' + new Date().getTime()
       state.tasks = [...state.tasks, action.payload]
+      console.log('add task: ', action.payload.id)
     },
     rmvTask: (state, action: PayloadAction<string>) => {
       //recebe o ID da tarefa
+
+      console.log('rmv task: ' + action.payload)
       state.tasks = state.tasks.filter((t) => t.id !== action.payload)
     },
     editTask: (state, action: PayloadAction<TaskProps>) => {

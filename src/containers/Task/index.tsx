@@ -86,7 +86,6 @@ function Task(props: TaskProps) {
             </StyledBtnEditar>
             <StyledBtnRemover
               onClick={() => {
-                console.log('removendo ' + props.id)
                 dispatch(rmvTask(props.id))
               }}
             >
