@@ -20,7 +20,7 @@ const fake_tasks: TaskProps[] = [
     description:
       'Possimus dicta iure molestiae dolores? Qui corrupti aut maxime?',
     priority: enums.PRIORITY.URGENTE,
-    status: enums.STATUS.PENDENTE
+    status: enums.STATUS.CONCLUIDO
   },
   {
     id: 'task_3',
@@ -51,9 +51,11 @@ const taskListSlice = createSlice({
       state.tasks = [...state.tasks, action.payload]
     },
     rmvTask: (state, action: PayloadAction<string>) => {
+      //recebe o ID da tarefa
       state.tasks = state.tasks.filter((t) => t.id !== action.payload)
     },
     editTask: (state, action: PayloadAction<TaskProps>) => {
+      //recabe a TAREFA editada
       const temp_tasks_list = state.tasks.map((t) => {
         if (t.id !== action.payload.id) {
           return t

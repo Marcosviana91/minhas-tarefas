@@ -10,20 +10,4 @@ const StyledTasksList = styled.main`
   }
 `
 
-export const StyledBtnAddTask = styled.button`
-  background-color: ${variaveis.COR.VERDE};
-  color: white;
-  font-size: 40px;
-  line-height: 40px;
-
-  height: 64px;
-  width: 64px;
-  border-radius: 50%;
-  border: none;
-
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-`
-
 export default StyledTasksList

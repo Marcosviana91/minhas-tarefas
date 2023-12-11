@@ -1,8 +1,32 @@
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
 
+import { typeFilterTag, TaskProps } from '../../utils/types/TypeTasks'
+
 import Task from '../Task'
-import StyledTasksList, { StyledBtnAddTask } from './style'
+import StyledTasksList from './style'
+
+export function FilterTask(
+  //Aplicar as opções de filtro (2 filtros aninhados)
+  list_to_filter: TaskProps[],
+  tag: typeFilterTag,
+  word = ''
+) {
+  return list_to_filter
+    .filter((item) => {
+      if (tag == 'todas') {
+        return item
+      }
+      if (item.status == tag || item.priority == tag) {
+        return item
+      }
+    })
+    .filter((item) => {
+      if (item.description.includes(word) || item.title.includes(word)) {
+        return item
+      }
+    })
+}
 
 function TasksList() {
   const currentFilterWord = useSelector(
@@ -13,23 +37,11 @@ function TasksList() {
   )
   const tasks_list = useSelector((state: RootReducer) => state.taskList.tasks)
   //Aplicar as opções de filtro (2 filtros aninhados)
-  const tasks_list_filtred = tasks_list
-    .filter((task) => {
-      if (currentTag == 'todas') {
-        return task
-      }
-      if (task.status == currentTag || task.priority == currentTag) {
-        return task
-      }
-    })
-    .filter((task) => {
-      if (
-        task.description.includes(currentFilterWord) ||
-        task.title.includes(currentFilterWord)
-      ) {
-        return task
-      }
-    })
+  const tasks_list_filtred = FilterTask(
+    tasks_list,
+    currentTag,
+    currentFilterWord
+  )
 
   return (
     <StyledTasksList>
@@ -40,7 +52,6 @@ function TasksList() {
       {tasks_list_filtred.map((task) => {
         return <Task key={task.id} {...task} />
       })}
-      <StyledBtnAddTask>+</StyledBtnAddTask>
     </StyledTasksList>
   )
 }

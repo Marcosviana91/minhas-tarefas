@@ -9,11 +9,20 @@ const StyledTask = styled.div`
   gap: 8px;
   padding: 16px;
 
+  h3.editing::before {
+    content: 'Editando: ';
+    font-style: italic;
+  }
   #desc {
     margin: 16px 0;
     color: #8b8b8b;
     font-size: 14px;
     line-height: 24px;
+    height: 5rem;
+    resize: none;
+  }
+  #desc.editing {
+    color: black;
   }
 
   #tags,

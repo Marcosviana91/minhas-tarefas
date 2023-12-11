@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-export type typeFilterTag =
-  | 'pendente'
-  | 'concluida'
-  | 'todas'
-  | 'urgente'
-  | 'importante'
-  | 'normal'
+import { typeFilterTag } from '../../../utils/types/TypeTasks'
 
 type typeFilterState = {
   filterWord: string

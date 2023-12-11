@@ -8,6 +8,13 @@ export type TaskProps = {
 }
 
 export type FilterCardsProps = {
-  counter: string
-  description: string
+  description: typeFilterTag
 }
+
+export type typeFilterTag =
+  | 'pendente'
+  | 'concluida'
+  | 'todas'
+  | 'urgente'
+  | 'importante'
+  | 'normal'
